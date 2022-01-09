@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments :: head(title='Book Shop - Order step 1')"></head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div th:replace="fragments :: orderStepHeader(step = 1)"></div>
+
+            <div th:replace="fragments :: cart"></div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="title">Choose a method of receiving the goods</div>
+
+                    <div class="row" style="margin-top:20px">
+                        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+
+                            <form method="post" th:action="@{${flowExecutionUrl}}">
+                                <div class="form-group">
+                                    <input class="form-control input-lg" type="text" id="addr" name="addr"
+                                           title="address"
+                                           placeholder="Delivery Address" autofocus/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3" style="float: none; margin: 0 auto;">
+                                        <input class="btn btn-primary btn-block" type="submit" name="_eventId_continue"
+                                               value="Next"/>
+                                        <a class="btn btn-primary btn-block" th:href="@{/cart}">Your Cart</a>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>

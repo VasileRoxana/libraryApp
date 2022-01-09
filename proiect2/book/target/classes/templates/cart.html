@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments :: head(title='Book Shop - Your Cart')">
+    <style>
+        .deleteBtn {
+            text-align: center;
+        }
+
+        .alert-info {
+            background-color: #933A16 !important;
+            margin-top: 20px !important;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="panel panel-default" style="margin-top: 25px">
+        <div class="panel-body">
+            <div class="title">Products list</div>
+            <div th:if="${#lists.isEmpty(@cartContainer.cartItems)}" class="alert alert-info">Cart is empty</div>
+
+            <div th:if="${not #lists.isEmpty(@cartContainer.cartItems)}">
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th>Product Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="item : ${@cartContainer.cartItems}">
+                        <td th:text="${item.book.title}"></td>
+                        <td th:text="${item.book.price}"></td>
+                        <td th:text="${item.amount}"></td>
+                        <td th:text="${@cartContainer.getProductTotalPrice(item.book.id)}"></td>
+                        <td align="center"><a class="deleteBtn" th:href="@{'/cart/remove/' + ${item.book.id}}" style="font-size: 12px">Remove</a></td>
+                    </tr>
+
+                    <tr></tr>
+                    <tr>
+                        <td>Cart Total:</td>
+                        <td></td>
+                        <td></td>
+                        <td th:text="${@cartContainer.totalPrice}"></td>
+                    </tr>
+                </table>
+                <div class="buttons">
+                    <a class="btn btn-dark" th:href="@{/cart/clear}">Clear</a>
+                    <a class="btn btn-dark" th:href="@{/cart/order}">Process Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>
