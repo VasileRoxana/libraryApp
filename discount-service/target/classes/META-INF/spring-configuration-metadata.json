@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "discount-service",
+      "type": "com.example.config.PropertiesConfig",
+      "sourceType": "com.example.config.PropertiesConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "discount-service.kids",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.config.PropertiesConfig"
+    },
+    {
+      "name": "discount-service.student",
+      "type": "java.lang.Integer",
+      "sourceType": "com.example.config.PropertiesConfig"
+    }
+  ],
+  "hints": []
+}
