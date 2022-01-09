@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+</head>
+<style>
+	 .sign {
+        padding-top: 40px;
+        color: #8C55AA;
+        font-family: 'Ubuntu', sans-serif;
+        font-weight: bold;
+        font-size: 33px;
+    }
+     body {
+        background-color: #F3EBF6;
+        font-family: 'Ubuntu', sans-serif;
+    }
+
+   .container {
+    width: 350px;
+    height: 452px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #ffe6e6;
+    margin-top: 50px;
+}
+
+
+
+    form.form1 {
+        padding-top: 40px;
+    }
+
+	.form-control{
+    color: rgb(38, 50, 56);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    background: rgba(136, 126, 126, 0.04);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    margin-bottom: 50px;
+
+    text-align: center;
+    margin-bottom: 27px;
+    font-family: 'Ubuntu', sans-serif;
+    }
+
+   #login-submit {
+      cursor: pointer;
+        border-radius: 5em;
+        color: #fff;
+        background: linear-gradient(to right, #9C27B0, #E040FB);
+        border: 0;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-family: 'Ubuntu', sans-serif;
+
+        font-size: 13px;
+        box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+    }
+
+     .form-group{
+        text-shadow: 1px 1px 3px rgba(117, 117, 117, 0.12);
+        color: #E1BEE7;
+		align="center"
+        font-size: 14px;
+
+    }
+
+    a {
+        text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+        color: #E1BEE7;
+        text-decoration: none
+    }
+
+    @media (max-width: 600px) {
+        .main {
+            border-radius: 0px;
+        }
+
+     .logo {
+            margin-top: 0px;
+            padding-top: 0;
+        }
+
+</style>
+<body>
+
+	<!-- create navigation bar ( header)
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" th:href="@{/}">Library application</a>
+			</div>
+		</div>
+	</nav> -->
+<br>
+<br>
+	<!-- Create HTML registration form -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+
+				<!-- success message -->
+				<div th:if="${param.success}">
+					<div class="alert alert-info">You've successfully registered
+						to our awesome app!</div>
+				</div>
+				<div class="logo">
+					<img src="https://findicons.com/files/icons/1994/vista_style_business_and_data/128/users.png" alt="Company Logo" srcset="">
+				</div>
+				<h1 class="sign" align="center">Registration</h1>
+
+				<form th:action="@{/registration}" method="post" th:object="${user}">
+					<div class="form-group">
+						<label class="control-label" for="firstName" ></label>
+						<input id="firstName" placeholder="First Name" class="form-control" th:field="*{firstName}"
+							required autofocus="autofocus" />
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="lastName"></label> <input
+							id="lastName" placeholder=" Last Name " class="form-control" th:field="*{lastName}"
+							required autofocus="autofocus" />
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="email"></label> <input
+							id="email" placeholder="Email" class="form-control" th:field="*{email}" required
+							autofocus="autofocus" />
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="password"></label> <input
+							id="password" placeholder="Password" class="form-control" type="password"
+							th:field="*{password}" required autofocus="autofocus" />
+					</div>
+
+					<div class="form-group" align="center"  >
+						<button type="submit" class="btn btn-success" id="login-submit" >Register</button>
+						<span>Already registered? <a href="/" th:href="@{/login}">Login
+								here</a></span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
