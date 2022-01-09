@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments :: head(title='Book Shop - Order list')"></head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div th:if="${not #lists.isEmpty(orderList)} ">
+                <div class="title">Orders</div>
+                <th:block th:each="order : ${orderList}">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="title">Order #<span th:text="${order.cart.id}"></span></div>
+                            <table class="table">
+                                <tr>
+                                    <th></th>
+                                    <th>Product Price</th>
+                                    <th>Amount</th>
+                                    <th>Total</th>
+                                </tr>
+                                <tr th:each="item : ${order.items}">
+                                    <td th:text="${item.book.title}"></td>
+                                    <td th:text="${item.book.price}"></td>
+                                    <td th:text="${item.amount}"></td>
+                                    <td th:text="${item.totalPrice}"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"><b>Cart Total: <span th:text="${order.totalPrice}"></span></b></td>
+                                </tr>
+                                <tr>
+                                    <td>Method of receiving the goods:
+                                        <span th:if="${order.cart.deliveryAddress != null}"
+                                              th:text="${order.cart.deliveryAddress}"></span>
+                                        <span th:if="${order.cart.deliveryAddress == null}">Pickup</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>

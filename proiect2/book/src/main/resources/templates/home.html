@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments :: head(title='eLibrary')">
+    <style>
+        .container-body {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container container-body">
+    <div class="panel panel-default" style="margin-top: 25px">
+        <div class="panel-body">
+            <div class="title">Books list</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div th:if="${not #lists.isEmpty(books)}">
+                        <table class="table">
+                            <tr th:each="book : ${books}">
+                                <td th:text="${book.title}"></td>
+                                <td th:text="${book.author}"></td>
+                                <td th:text="${book.publishingYear}"></td>
+                                <td th:text="${book.publisher}"></td>
+                                <td th:text="${book.price}"> EUR</td>
+                                <td><a th:href="@{'/cart/add/' + ${book.id}} ">Buy</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments :: head(title='Book Shop - Order step 2')"></head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div th:replace="fragments :: orderStepHeader(step = 2)"></div>
+
+            <div th:replace="fragments :: cart"></div>
+
+            <div th:replace="fragments :: cartDelivery"></div>
+
+            <div class="title">Contact Informations</div>
+            <div th:if="${#request.userPrincipal == null}">
+                <a th:href="@{/registration}" th:if="${#request.userPrincipal == null}">Register</a>
+                <a th:href="@{/login}" th:if="${#request.userPrincipal == null}">Login</a>
+            </div>
+
+            <div th:if="${#request.userPrincipal != null}">
+                <div class="row" style="margin-top:20px">
+                    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                        <div class="title">You are logged in as: <span th:text="${#request.userPrincipal.name}"></span></div>
+
+                        <form method="post" th:action="@{${flowExecutionUrl}}" th:object="${cart}">
+                            <div class="row">
+                                <div class="col-sm-3" style="float: none; margin: 0 auto;">
+                                    <input class="btn btn-primary btn-block" type="submit" name="_eventId_continue"
+                                           value="Next"/>
+                                    <a class="btn btn-primary btn-block" th:href="@{/cart}">Your Cart</a>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="fragments :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+.title {
+    font-size: 18px;
+}
+
+.product-list {
+    width: 100%;
+}
+
+div.header {
+    display: inline-block;
+}
+
+.span{
+    font-size:24px;
+    color:#b8b8b8
+}
+
+.step-line-wrapper {
+    margin:20px 0;
+    padding:0 20px
+}
+
+.step-line-wrapper ul {
+    height:35px;
+    list-style-type:none;
+    margin:0;
+    overflow:hidden;
+    padding:0;
+    position:relative;
+    text-align:justify;
+    text-align-last:justify
+}
+
+.step-line-wrapper ul:after {
+    content:"";
+    display:inline-block;
+    height:0;
+    overflow:hidden;
+    width:100%
+}
+
+.step-line-wrapper ul:before {
+    background:#d8d8d8;
+    content:'';
+    display:block;
+    height:2px;
+    left:10px;
+    position:absolute;
+    top:calc(50% - 1px);
+    width:calc(100% - 20px);
+    z-index:0
+}
+
+.step-line-wrapper ul li {
+    background: #fff;
+    display: inline-block;
+    padding: 0 10px;
+    position: relative;
+    vertical-align: top
+}
+
+.step-line-wrapper ul li:first-child {
+    padding-left: 0
+}
+
+.step-line-wrapper ul li:last-child {
+    padding-right: 0
+}
+
+.step-line-wrapper ul li .circle {
+    border-radius: 18px;
+    background: #d8d8d8;
+    color: #fff;
+    display: inline-block;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    text-align-last: center;
+    width: 35px
+}
+
+.step-line-wrapper ul li.active .circle {
+    background: #FD9B09
+}
+
+.step-line-wrapper ul li.active .label {
+    color:#333;
+    font-weight:bold
+}
+.step-line-wrapper ul li.passed .circle {
+    background:#6BA833
+}
+.step-line-wrapper ul li.passed .circle i {
+    vertical-align:middle
+}
+.step-line-wrapper ul li .label {
+    font-size: 16px;
+    color:gray;
+    margin-left:10px
+}
+
+.navbar-nav {
+    flex-direction: row !important;
+}

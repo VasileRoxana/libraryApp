@@ -1,0 +1,131 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head th:fragment="head (title)">
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title th:text="${title}"></title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="css/main.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        a {
+            color: #c1c1c1;
+        }
+
+        a:hover {
+            color: #933A16;
+        }
+
+        .container-navbar{
+            margin: 0 auto !important;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="navbar" class="container container-navbar">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/" style="font-size: 20px"><span class="glyphicon glyphicon-bookmark" style="padding: 5px"></span> Book Shop</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right" style="flex-direction: row; padding: 10px;">
+                <li style="padding: 10px"><a th:href="@{/registration}" th:if="${#request.userPrincipal == null}"><span
+                        class="glyphicon glyphicon-user"></span> Register</a></li>
+                <li style="padding: 10px"><a th:href="@{/login}" th:if="${#request.userPrincipal == null}"><span
+                        class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li style="padding: 10px"><a th:href="@{/logout}" th:if="${#request.userPrincipal != null}"><span
+                        class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li style="padding: 10px"><a th:href="@{/cart}"><span class="glyphicon glyphicon-shopping-cart"></span> Your Cart</a></li>
+                <li style="padding: 10px"><a th:href="@{/orders}" th:if="${#request.userPrincipal != null}"><span
+                        class="glyphicon glyphicon-th-list"></span> Your Orders</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div th:fragment="footer" class="container">
+    <hr/>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <p class="text-center">&copy; 2022
+                <span th:if="${#request.userPrincipal != null}">
+                | Logged user: <span th:text="${#request.userPrincipal.name}"></span> |
+                Roles: <span>...</span> |
+                <a th:href="@{/logout}">Logout</a>
+                    </span>
+            </p>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<!--    <script  src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+</div>
+
+<div th:fragment="orderStepHeader (step)" class="step-line-wrapper">
+    <ul>
+        <li th:class="${step} == 1 ? 'active' : (${step} > 1 ? 'passed' : null)">
+            <span class="circle">1</span>
+            <span class="label">Order Details</span>
+        </li>
+        <li th:class="${step} == 2 ? 'active' : (${step} > 2 ? 'passed' : null)">
+            <span class="circle">2</span>
+            <span class="label">Customer Details</span>
+        </li>
+        <li th:class="${step} == 3 ? 'active' : (${step} > 3 ? 'passed' : null)">
+            <span class="circle">3</span>
+            <span class="label">Payment Method</span>
+        </li>
+        <li th:class="${step} == 4 ? 'active' : (${step} > 4 ? 'passed' : null)">
+            <span class="circle">4</span>
+            <span class="label">All Set</span>
+        </li>
+    </ul>
+</div>
+
+<div th:fragment="cart" class="panel panel-default">
+    <div class="panel-body">
+        <div class="title">Cart Details</div>
+
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>Product Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            <tr th:each="item : ${@cartContainer.cartItems}">
+                <td th:text="${item.book.title}"></td>
+                <td th:text="${item.book.price}"></td>
+                <td th:text="${item.amount}"></td>
+                <td th:text="${@cartContainer.getProductTotalPrice(item.book.id)}"></td>
+            </tr>
+
+            <tr></tr>
+            <tr>
+                <td>Cart Total:</td>
+                <td></td>
+                <td></td>
+                <td th:text="${@cartContainer.totalPrice}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div th:fragment="cartDelivery" class="panel panel-default">
+    <div class="panel-body">
+        <div class="title">Method of receiving the goods</div>
+        <div th:if="${@cartContainer.cart.deliveryAddress == null}">Pickup from the store</div>
+        <div th:if="${@cartContainer.cart.deliveryAddress != null}">Delivery to address: <span th:text="${@cartContainer.cart.deliveryAddress}"></span></div>
+    </div>
+</div>
+
+</body>
+</html>

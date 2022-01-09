@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+    <view-state id="orderStepOne" view="orderStepOne" model="cartContainer">
+        <transition on="continue" to="orderStepTwo"/>
+        <on-exit>
+            <evaluate expression="cartContainer.cart.deliveryAddress = requestParameters.addr"/>
+        </on-exit>
+    </view-state>
+
+    <view-state id="orderStepTwo" view="orderStepTwo">
+        <on-render>
+            <set name="requestScope.cartContainer" value="cartContainer"/>
+        </on-render>
+        <transition on="continue" to="orderStepThree"/>
+    </view-state>
+
+    <view-state id="orderStepThree" view="orderStepThree">
+        <transition on="continue" to="orderStepFour">
+            <evaluate expression="cartService.submitOrderForPayment()"/>
+        </transition>
+    </view-state>
+
+    <view-state id="orderStepFour" view="orderStepFour">
+        <transition on="continue" to="shop"/>
+    </view-state>
+
+    <end-state id="shop" />
+
+</flow>
