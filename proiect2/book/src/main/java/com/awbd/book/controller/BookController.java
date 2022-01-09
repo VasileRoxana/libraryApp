@@ -1,6 +1,7 @@
 package com.awbd.book.controller;
 
 import com.awbd.book.DiscountServiceProxy;
+import com.awbd.book.impl.CartContainer;
 import com.awbd.book.model.Book;
 import com.awbd.book.model.Discount;
 import com.awbd.book.services.BookService;
@@ -10,6 +11,8 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -21,24 +24,50 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@RestController
+@Controller
 @Slf4j
 public class BookController {
     @Autowired
     BookService bookService;
 
     @Autowired
+    CartContainer cartContainer;
+
+    @Autowired
     DiscountServiceProxy discountServiceProxy;
 
+    @RequestMapping("/")
+    public String indexPage(Model model) {
+        model.addAttribute("books", bookService.getAllBooks());
+        return "home";
+    }
 
-    @GetMapping("/")
-    String welcome(){
-        return "Welcome to our library!";
+    @RequestMapping("/cart")
+    public String cartView() {
+        return "cart";
+    }
+
+    @RequestMapping("/cart/clear")
+    public String cartClear() {
+        cartContainer.clear();
+        return "redirect:/cart";
+    }
+
+    @RequestMapping("/cart/add/{id}")
+    public String cartAddProduct(@PathVariable(value = "id") int id) {
+        cartContainer.addItem(bookService.findById((long) id));
+        System.out.println(cartContainer);
+        return "redirect:/";
+    }
+
+    @RequestMapping("/cart/remove/{id}")
+    public String cartRemoveProduct(@PathVariable(value = "id") int id) {
+        cartContainer.removeItem(id);
+        return "redirect:/cart";
     }
 
     @GetMapping("/book/all")
     public List<Book> getAllBooks(){
-
         return bookService.getAllBooks();
     }
 
@@ -55,16 +84,8 @@ public class BookController {
         URI locationUri =ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{bookId}").buildAndExpand(savedBook.getId())
                 .toUri();
-
-
         return ResponseEntity.created(locationUri).body(savedBook);
     }
-
-//    @DeleteMapping("/book/{bookId}")
-//    public String deleteBook(@PathVariable Long bookId){
-//        bookService.delete(bookId);
-//        return "Book with id " + bookId + " was deleted!";
-//    }
 
     @DeleteMapping("/book/{bookId}")
     public ResponseEntity<Long> deleteBook(@PathVariable Long bookId) {
@@ -86,14 +107,6 @@ public class BookController {
         return bookService.findById(bookId);
     }
 
-//    @GetMapping("/book/title/{title}")
-//    Book findByTitle(@PathVariable String title) {
-//        Book book = bookService.findByTitle(title);
-//        Link selfLink = linkTo(methodOn(BookController.class).getBook(book.getId())).withSelfRel();
-//        book.add(selfLink);
-//        return book;
-//    }
-
     @GetMapping("/book/title/{title}")
     @HystrixCommand(fallbackMethod = "fallbackfindByTitle")
     Book findByTitleDiscount(@PathVariable String title) {
@@ -109,7 +122,6 @@ public class BookController {
         Book book = bookService.findByTitle(title);
         Link selfLink = linkTo(methodOn(BookController.class).getBook(book.getId())).withSelfRel();
         book.add(selfLink);
-
         return book;
     }
 
@@ -117,22 +129,5 @@ public class BookController {
     public List<Book> findByAuthor(@PathVariable String author) {
         return bookService.findByAuthor(author);
     }
-
-
-
-
-//    @GetMapping(value = "/book/list", produces = {"application/hal+json" })
-//    public CollectionModel<Book> findBook() {
-//        List<Book> books = bookService.getAllBooks();
-//        for (final Book book : books) {
-//            Link selfLink = linkTo(methodOn(BookController.class).getBook(book.getId())).withSelfRel();
-//            book.add(selfLink);
-//            Link deleteLink = linkTo(methodOn(BookController.class).deleteBook(book.getId())).withRel("deleteBook");
-//            book.add(deleteLink);
-//        }
-//        Link link = linkTo(methodOn(BookController.class).findBook()).withSelfRel();
-//        CollectionModel<Book> result = CollectionModel.of(books, link);
-//        return result;
-//    }
 
 }
