@@ -1,5 +1,6 @@
 package net.javaguides.springboot.web;
 
+import net.javaguides.springboot.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -24,4 +25,5 @@ public class MainController {
 		//attributes.addAttribute("attribute", "redirectWithRedirectView");
 		return new RedirectView("/books/all");
 	}
+
 }
