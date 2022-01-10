@@ -21,12 +21,12 @@
                                 </tr>
                                 <tr th:each="item : ${order.items}">
                                     <td th:text="${item.book.title}"></td>
-                                    <td th:text="${item.book.price}"></td>
+                                    <td th:text="${item.book.price} + ' RON'"></td>
                                     <td th:text="${item.amount}"></td>
-                                    <td th:text="${item.totalPrice}"></td>
+                                    <td th:text="${item.totalPrice} + ' RON'"></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5"><b>Cart Total: <span th:text="${order.totalPrice}"></span></b></td>
+                                    <td colspan="5"><b>Cart Total: <span th:text="${order.totalPrice} + ' RON'"></span></b></td>
                                 </tr>
                                 <tr>
                                     <td>Method of receiving the goods:

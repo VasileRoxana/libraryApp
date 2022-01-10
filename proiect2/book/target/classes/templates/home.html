@@ -22,7 +22,7 @@
                                 <td th:text="${book.author}"></td>
                                 <td th:text="${book.publishingYear}"></td>
                                 <td th:text="${book.publisher}"></td>
-                                <td th:text="${book.price}"> EUR</td>
+                                <td th:text="${book.price} + ' RON'"></td>
                                 <td><a th:href="@{'/cart/add/' + ${book.id}} ">Buy</a></td>
                             </tr>
                         </table>

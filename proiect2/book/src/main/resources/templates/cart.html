@@ -31,9 +31,11 @@
                     </tr>
                     <tr th:each="item : ${@cartContainer.cartItems}">
                         <td th:text="${item.book.title}"></td>
-                        <td th:text="${item.book.price}"></td>
+                        <td th:text="${item.book.price} + ' RON'"></td>
                         <td th:text="${item.amount}"></td>
-                        <td th:text="${@cartContainer.getProductTotalPrice(item.book.id)}"></td>
+                        <td th:text="${@cartContainer.getProductTotalPrice(item.book.id)} + ' RON'"></td>
+                        <td th:text="${@cartContainer.getDiscountServiceProxy * (-1)} + ' %'"></td>
+                        <td th:text="${@cartContainer.getProductDiscountTotalPrice(item.book.id)} + ' RON'"></td>
                         <td align="center"><a class="deleteBtn" th:href="@{'/cart/remove/' + ${item.book.id}}" style="font-size: 12px">Remove</a></td>
                     </tr>
 
@@ -42,7 +44,7 @@
                         <td>Cart Total:</td>
                         <td></td>
                         <td></td>
-                        <td th:text="${@cartContainer.totalPrice}"></td>
+                        <td th:text="${@cartContainer.getTotalDiscountPrice} + ' RON'"></td>
                     </tr>
                 </table>
                 <div class="buttons">

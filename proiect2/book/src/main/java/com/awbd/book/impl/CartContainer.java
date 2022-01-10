@@ -1,8 +1,12 @@
 package com.awbd.book.impl;
 
+import com.awbd.book.DiscountServiceProxy;
 import com.awbd.book.model.Book;
 import com.awbd.book.model.Cart;
 import com.awbd.book.model.CartItem;
+import com.awbd.book.model.Discount;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +19,7 @@ import java.util.Map;
 import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 
-
+@Slf4j
 @Component
 @Scope(scopeName = SCOPE_SESSION, proxyMode = TARGET_CLASS)
 public class CartContainer implements Serializable {
@@ -26,6 +30,9 @@ public class CartContainer implements Serializable {
         cart = new Cart();
         cartItems = new HashMap<>();
     }
+
+    @Autowired
+    DiscountServiceProxy discountServiceProxy;
 
     public Cart getCart() {
         return cart;
@@ -60,14 +67,36 @@ public class CartContainer implements Serializable {
         }
     }
 
+    public int getDiscountServiceProxy() {
+        return discountServiceProxy.findDiscount().getStudent();
+    }
+
     public int getTotalPrice() {
         int total = 0;
         List<CartItem> cartItemList = getCartItems();
         for (CartItem item : cartItemList) {
             total += getProductTotalPrice(Math.toIntExact(item.getBook().getId()));
+//            Discount discount = discountServiceProxy.findDiscount();
+//            log.info(Integer.toString(discount.getInstanceId()));
+//            total = total - (total * discount.getStudent())/100;
+//            book.setPrice(book.getPrice() - (book.getPrice() * discount.getStudent())/100);
         }
         return total;
     }
+
+    public int getTotalDiscountPrice() {
+        int total = 0;
+        List<CartItem> cartItemList = getCartItems();
+        for (CartItem item : cartItemList) {
+            total += getProductDiscountTotalPrice(Math.toIntExact(item.getBook().getId()));
+//            Discount discount = discountServiceProxy.findDiscount();
+//            log.info(Integer.toString(discount.getInstanceId()));
+//            total = total - (total * discount.getStudent())/100;
+//            book.setPrice(book.getPrice() - (book.getPrice() * discount.getStudent())/100);
+        }
+        return total;
+    }
+
 
     public void clear() {
         cartItems.clear();
@@ -85,9 +114,21 @@ public class CartContainer implements Serializable {
 
 
     public int getProductTotalPrice(int productID) {
+        Discount discount = discountServiceProxy.findDiscount();
+        log.info(Integer.toString(discount.getInstanceId()));
         int price = (int) cartItems.get(productID).getBook().getPrice();
+//        int discountPrice = price - (price * discount.getStudent())/100;
         int amount = cartItems.get(productID).getAmount();
         return price * amount;
+    }
+
+    public int getProductDiscountTotalPrice(int productID) {
+        Discount discount = discountServiceProxy.findDiscount();
+        log.info(Integer.toString(discount.getInstanceId()));
+        int price = (int) cartItems.get(productID).getBook().getPrice();
+        int discountPrice = price - (price * discount.getStudent())/100;
+        int amount = cartItems.get(productID).getAmount();
+        return discountPrice * amount;
     }
 
     @Override

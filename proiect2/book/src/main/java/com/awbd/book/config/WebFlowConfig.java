@@ -25,8 +25,8 @@ public class WebFlowConfig extends AbstractFlowConfiguration {
     @Bean
     public FlowDefinitionRegistry flowRegistry() {
         return getFlowDefinitionRegistryBuilder()
-                .setBasePath("classpath:static/flow/cart/order")
-                .addFlowLocationPattern("**/*.xml")
+                .setBasePath("classpath:flow")
+                .addFlowLocationPattern("order.xml")
                 .setFlowBuilderServices(flowBuilderServices())
                 .build();
     }
