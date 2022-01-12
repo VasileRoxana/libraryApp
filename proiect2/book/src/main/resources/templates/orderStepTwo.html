@@ -13,10 +13,10 @@
             <div th:replace="fragments :: cartDelivery"></div>
 
             <div class="title">Contact Informations</div>
-            <div th:if="${#request.userPrincipal == null}">
-                <a th:href="@{/registration}" th:if="${#request.userPrincipal == null}">Register</a>
-                <a th:href="@{/login}" th:if="${#request.userPrincipal == null}">Login</a>
-            </div>
+<!--            <div th:if="${#request.userPrincipal == null}">-->
+<!--                <a th:href="@{/registration}" th:if="${#request.userPrincipal == null}">Register</a>-->
+<!--                <a th:href="@{/login}" th:if="${#request.userPrincipal == null}">Login</a>-->
+<!--            </div>-->
 
             <div th:if="${#request.userPrincipal != null}">
                 <div class="row" style="margin-top:20px">
