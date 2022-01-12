@@ -4,5 +4,10 @@
       "name": "discount-service.ribbon.listOfServers",
       "type": "java.lang.String",
       "description": "Description for discount-service.ribbon.listOfServers."
+    },
+    {
+      "name": "user-service.ribbon.listOfServers",
+      "type": "java.lang.String",
+      "description": "Description for user-service.ribbon.listOfServers."
     }
   ] }
