@@ -10,12 +10,14 @@
     {
       "name": "discount-service.kids",
       "type": "java.lang.Integer",
-      "sourceType": "com.example.config.PropertiesConfig"
+      "sourceType": "com.example.config.PropertiesConfig",
+      "defaultValue": 0
     },
     {
       "name": "discount-service.student",
       "type": "java.lang.Integer",
-      "sourceType": "com.example.config.PropertiesConfig"
+      "sourceType": "com.example.config.PropertiesConfig",
+      "defaultValue": 0
     }
   ],
   "hints": []
